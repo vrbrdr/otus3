@@ -3,7 +3,7 @@
 #include <string>
 
 void show_score_table();
-void update_score_table(std::string user_name, int user_input_number);
+void update_score_table(const std::string &user_name, int result);
 
 class storage_exception : std::exception {
  private:
