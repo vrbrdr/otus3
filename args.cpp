@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <array>
 
 bool parse_args(int argc, const char **argv, bool &show_table_arg,
                 int &max_number_arg) {
@@ -39,6 +40,7 @@ bool parse_args(int argc, const char **argv, bool &show_table_arg,
       return false;
     }
   } else if (cmd == "-level") {
+  /*
     switch (num) {
       case 1:
         max_number_arg = MAX_NUMBER_LEVEL1;
@@ -54,7 +56,16 @@ bool parse_args(int argc, const char **argv, bool &show_table_arg,
 
       default:
         return false;
+    }*/
+
+    static const std::array<int, 3> levels = {MAX_NUMBER_LEVEL1, MAX_NUMBER_LEVEL2, MAX_NUMBER_LEVEL3};
+      
+    if (num < 1 || num > levels.max_size()) {
+      return false;
     }
+
+    max_number_arg = levels[num - 1];
+    return true;   
   }
 
   return false;

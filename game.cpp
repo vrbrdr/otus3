@@ -12,14 +12,18 @@ void play(int max_number_arg) {
   std::string user_name;
 
   std::cout << "Enter your name: " << std::endl;
-  std::cin >> user_name;
+  //user_name = std::cin.getline();
+  getline(std::cin >> std::ws,user_name);
 
   std::mt19937 engine;
   std::random_device device;
   engine.seed(device());
-
+  std::uniform_int_distribution<int> distr(0, max_number_arg - 1);
+ 
   for (;;) {
-    int rnd = engine() % max_number_arg;
+    //int rnd = engine() % max_number_arg;
+    int rnd = distr(engine);
+
     game(user_name, rnd);
 
     if (!ask_new_game()) {
@@ -63,16 +67,14 @@ int get_user_number(bool firstTime) {
 }
 
 bool check_result(int rnd, int user_input_number) {
-  if (rnd < user_input_number) {
-    std::cout << "less than " << user_input_number;
-    return false;
-  } else if (user_input_number < rnd) {
-    std::cout << "greater than " << user_input_number;
-    return false;
-  } else {
+  if (rnd == user_input_number) {
     std::cout << "you win!" << std::endl;
     return true;
-  }
+  } 
+ 
+   const bool less = rnd < user_input_number;
+   std::cout << (less?"less":"greater") << " than " << user_input_number << std::endl;
+   return false;
 }
 
 void game(const std::string &user_name, int rnd) {
